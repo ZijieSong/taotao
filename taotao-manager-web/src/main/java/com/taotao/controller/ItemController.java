@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("/item/")
 public class ItemController {
     @Autowired
     ItemService itemService;
 
-    @RequestMapping("/item/list")
+    @RequestMapping("list")
     @ResponseBody
     public EasyUIDataGridResult getItemList(@RequestParam(value = "page", defaultValue = "1")Integer pageNum,
                                             @RequestParam(value = "rows", defaultValue = "10")Integer pageSize){
