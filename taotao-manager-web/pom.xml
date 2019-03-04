@@ -96,7 +96,6 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
         </dependency>
-
     </dependencies>
     <!-- 配置tomcat插件 -->
     <build>
