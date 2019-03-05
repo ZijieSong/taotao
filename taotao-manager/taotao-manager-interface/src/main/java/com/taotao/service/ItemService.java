@@ -7,5 +7,5 @@ import com.taotao.pojo.TaotaoResult;
 public interface ItemService {
     EasyUIDataGridResult getItemList(int pageNum, int pageSize);
 
-    TaotaoResult addItem(Item item);
+    TaotaoResult addItem(Item item, String desc, String itemParams);
 }

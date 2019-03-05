@@ -31,6 +31,7 @@
     <dubbo:service interface="com.taotao.service.TestService" ref="testServiceImpl" timeout="300000"/>
     <dubbo:service interface="com.taotao.service.ItemService" ref="itemServiceImpl" timeout="300000"/>
     <dubbo:service interface="com.taotao.service.ItemCatService" ref="itemCatServiceImpl" timeout="300000"/>
+    <dubbo:service interface="com.taotao.service.ItemParamService" ref="itemParamServiceImpl" timeout="300000"/>
 
 
 </beans>

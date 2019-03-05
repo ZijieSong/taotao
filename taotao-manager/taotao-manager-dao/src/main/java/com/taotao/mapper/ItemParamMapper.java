@@ -11,6 +11,8 @@ public interface ItemParamMapper {
 
     ItemParam selectByPrimaryKey(Long id);
 
+    ItemParam selectByCategoryId(Long cid);
+
     int updateByPrimaryKeySelective(ItemParam record);
 
     int updateByPrimaryKeyWithBLOBs(ItemParam record);
