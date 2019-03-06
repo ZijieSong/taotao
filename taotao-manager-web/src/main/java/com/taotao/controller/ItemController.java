@@ -5,6 +5,7 @@ import com.taotao.pojo.Item;
 import com.taotao.pojo.KindEditorResult;
 import com.taotao.pojo.TaotaoResult;
 import com.taotao.service.ItemService;
+import com.taotao.service.UploadFileService;
 import com.taotao.utils.FtpUtil;
 import com.taotao.utils.IDUtils;
 import org.joda.time.DateTime;
@@ -23,19 +24,21 @@ import java.io.IOException;
 public class ItemController {
     @Autowired
     ItemService itemService;
+    @Autowired
+    UploadFileService uploadFileService;
 
-    @Value("${ftp.host}")
-    private String ftpHost;
-    @Value("${ftp.port}")
-    private int ftpPort;
-    @Value("${ftp.username}")
-    private String ftpUsername;
-    @Value("${ftp.password}")
-    private String ftpPassword;
-    @Value("${ftp.basePath}")
-    private String ftpBasePath;
-    @Value("${image.url.prefix}")
-    private String urlPrefix;
+//    @Value("${ftp.host}")
+//    private String ftpHost;
+//    @Value("${ftp.port}")
+//    private int ftpPort;
+//    @Value("${ftp.username}")
+//    private String ftpUsername;
+//    @Value("${ftp.password}")
+//    private String ftpPassword;
+//    @Value("${ftp.basePath}")
+//    private String ftpBasePath;
+//    @Value("${image.url.prefix}")
+//    private String urlPrefix;
 
     @RequestMapping("/item/list")
     @ResponseBody
@@ -44,26 +47,32 @@ public class ItemController {
         return itemService.getItemList(pageNum, pageSize);
     }
 
+    //    @RequestMapping("/pic/upload")
+//    @ResponseBody
+//    public KindEditorResult uploadFile(@RequestParam MultipartFile uploadFile) {
+//        String originName = uploadFile.getOriginalFilename();
+//        String newName = IDUtils.genImageName() + originName.substring(originName.lastIndexOf('.'));
+//        String filePath = new DateTime().toString("/yyyy/MM/dd");
+//        //上传图片
+//        try {
+//            boolean result = FtpUtil.uploadFile(ftpHost, ftpPort, ftpUsername, ftpPassword, ftpBasePath, filePath, newName, uploadFile.getInputStream());
+//            if (result)
+//                return KindEditorResult.success(urlPrefix + filePath + "/" + newName);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return KindEditorResult.fail("上传失败");
+//    }
     @RequestMapping("/pic/upload")
     @ResponseBody
-    public KindEditorResult uploadFile(@RequestParam MultipartFile uploadFile) {
-        String originName = uploadFile.getOriginalFilename();
-        String newName = IDUtils.genImageName() + originName.substring(originName.lastIndexOf('.'));
-        String filePath = new DateTime().toString("/yyyy/MM/dd");
-        //上传图片
-        try {
-            boolean result = FtpUtil.uploadFile(ftpHost, ftpPort, ftpUsername, ftpPassword, ftpBasePath, filePath, newName, uploadFile.getInputStream());
-            if (result)
-                return KindEditorResult.success(urlPrefix + filePath + "/" + newName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return KindEditorResult.fail("上传失败");
+    public KindEditorResult uploadFile(@RequestParam MultipartFile uploadFile) throws IOException {
+        String fileName = uploadFile.getOriginalFilename();
+        return uploadFileService.uploadImageByFastDFS(uploadFile.getBytes(),fileName);
     }
 
-    @RequestMapping(value = "/item/save",method = RequestMethod.POST)
+    @RequestMapping(value = "/item/save", method = RequestMethod.POST)
     @ResponseBody
-    public TaotaoResult saveItem(Item item, String desc, @RequestParam String itemParams){
-        return itemService.addItem(item,desc,itemParams);
+    public TaotaoResult saveItem(Item item, String desc, @RequestParam String itemParams) {
+        return itemService.addItem(item, desc, itemParams);
     }
 }

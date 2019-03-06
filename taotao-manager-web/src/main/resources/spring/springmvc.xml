@@ -42,5 +42,6 @@
     <dubbo:reference interface="com.taotao.service.ItemService" id="itemService" timeout="300000"/>
     <dubbo:reference interface="com.taotao.service.ItemCatService" id="itemCatService" timeout="300000"/>
     <dubbo:reference interface="com.taotao.service.ItemParamService" id="itemParamService" timeout="300000"/>
+    <dubbo:reference interface="com.taotao.service.UploadFileService" id="uploadFileService" timeout="300000"/>
 
 </beans>
