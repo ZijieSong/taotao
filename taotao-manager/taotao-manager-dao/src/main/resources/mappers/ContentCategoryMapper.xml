@@ -22,11 +22,18 @@
     from tb_content_category
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByParentId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from tb_content_category
+      where parent_id = #{parentId,jdbcType=BIGINT}
+      and status = #{status, jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_content_category
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.taotao.pojo.ContentCategory" >
+  <insert id="insert" parameterType="com.taotao.pojo.ContentCategory" useGeneratedKeys="true" keyProperty="id">
     insert into tb_content_category (id, parent_id, name, 
       status, sort_order, is_parent, 
       created, updated)
@@ -34,7 +41,7 @@
       #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
       #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.taotao.pojo.ContentCategory" >
+  <insert id="insertSelective" parameterType="com.taotao.pojo.ContentCategory" useGeneratedKeys="true" keyProperty="id">
     insert into tb_content_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -126,5 +133,26 @@
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateStatusBatch">
+    update tb_content_category
+    <set>
+      <trim prefix="status=case" suffix="end,">
+        <foreach collection="contentCatList" index="index" item="item">
+          <if test="item.status!=null">
+            when id = #{item.id} then #{item.status}
+          </if>
+          <if test="item.status==null">
+            when id = #{item.id} then tb_content_category.status
+          </if>
+        </foreach>
+      </trim>
+    </set>
+    <if test="contentCatList!=null and contentCatList.size()>0">
+      where id in
+      <foreach collection="contentCatList" index="index" item="item" open="(" close=")" separator=",">
+        #{item.id}
+      </foreach>
+    </if>
   </update>
 </mapper>

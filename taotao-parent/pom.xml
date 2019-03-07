@@ -33,6 +33,7 @@
         <jedis.version>2.7.2</jedis.version>
         <solrj.version>4.10.3</solrj.version>
         <dubbo.version>2.5.3</dubbo.version>
+        <javassist.version>3.18.2-GA</javassist.version>
         <zookeeper.version>3.4.7</zookeeper.version>
         <zkclient.version>0.1</zkclient.version>
         <activemq.version>5.13.0</activemq.version>
@@ -209,6 +210,11 @@
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${javassist.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.sgroschupf</groupId>

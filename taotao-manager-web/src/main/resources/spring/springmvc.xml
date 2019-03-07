@@ -9,7 +9,7 @@
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-    <context:component-scan base-package="com.taotao.controller"/>
+    <context:component-scan base-package="com.taotao.manager.controller"/>
     <mvc:annotation-driven/>
 
     <!-- 加载配置文件 -->
@@ -43,5 +43,6 @@
     <dubbo:reference interface="com.taotao.service.ItemCatService" id="itemCatService" timeout="300000"/>
     <dubbo:reference interface="com.taotao.service.ItemParamService" id="itemParamService" timeout="300000"/>
     <dubbo:reference interface="com.taotao.service.UploadFileService" id="uploadFileService" timeout="300000"/>
+    <dubbo:reference interface="com.taotao.content.service.ContentManageService" id="contentManageService" timeout="300000"/>
 
 </beans>

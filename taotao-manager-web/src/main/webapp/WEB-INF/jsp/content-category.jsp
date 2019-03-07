@@ -15,6 +15,7 @@ $(function(){
 		url : '/content/category/list',
 		animate: true,
 		method : "GET",
+        //右击鼠标触发
 		onContextMenu: function(e,node){
             e.preventDefault();
             $(this).tree('select',node.target);
@@ -62,7 +63,7 @@ function menuHandler(item){
 	}else if(item.name === "delete"){
 		$.messager.confirm('确认','确定删除名为 '+node.text+' 的分类吗？',function(r){
 			if(r){
-				$.post("/content/category/delete/",{parentId:node.parentId,id:node.id},function(){
+                $.post("/content/category/delete/",{id:node.id},function(){
 					tree.tree("remove",node.target);
 				});	
 			}
