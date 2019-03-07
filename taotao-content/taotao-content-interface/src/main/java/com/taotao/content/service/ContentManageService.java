@@ -1,5 +1,7 @@
 package com.taotao.content.service;
 
+import com.taotao.pojo.Content;
+import com.taotao.pojo.EasyUIDataGridResult;
 import com.taotao.pojo.EasyUIDataTreeNode;
 import com.taotao.pojo.TaotaoResult;
 
@@ -13,4 +15,12 @@ public interface ContentManageService {
     TaotaoResult updateContentCat(Long id, String name);
 
     TaotaoResult deleteContentCat(Long id);
+
+    EasyUIDataGridResult queryContentList(Long categoryId, Integer pageNum, Integer pageSize);
+
+    TaotaoResult saveContent(Content content);
+
+    TaotaoResult editContent(Content content);
+
+    TaotaoResult deleteContents(List<Long> ids);
 }

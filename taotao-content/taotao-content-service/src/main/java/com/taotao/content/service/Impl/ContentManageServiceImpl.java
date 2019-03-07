@@ -1,11 +1,12 @@
 package com.taotao.content.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.taotao.content.service.ContentManageService;
 import com.taotao.mapper.ContentCategoryMapper;
 
-import com.taotao.pojo.ContentCategory;
-import com.taotao.pojo.EasyUIDataTreeNode;
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.mapper.ContentMapper;
+import com.taotao.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +19,9 @@ import java.util.List;
 public class ContentManageServiceImpl implements ContentManageService {
     @Autowired
     ContentCategoryMapper contentCategoryMapper;
+    @Autowired
+    ContentMapper contentMapper;
+
     @Override
     public List<EasyUIDataTreeNode> showContentCatList(Long parentId) {
         List<ContentCategory> contentCategoryList = contentCategoryMapper.selectByParentId(parentId, 1);
@@ -85,6 +89,35 @@ public class ContentManageServiceImpl implements ContentManageService {
             updateParent.setIsParent(false);
             contentCategoryMapper.updateByPrimaryKeySelective(updateParent);
         }
+        return TaotaoResult.ok();
+    }
+
+    @Override
+    public EasyUIDataGridResult queryContentList(Long categoryId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Content> contentList = contentMapper.selectByCategoryId(categoryId);
+        PageInfo<Content> pageInfo = new PageInfo<>(contentList);
+        return new EasyUIDataGridResult((int)pageInfo.getTotal(),contentList);
+    }
+
+    @Override
+    public TaotaoResult saveContent(Content content) {
+        content.setCreated(new Date());
+        content.setUpdated(new Date());
+        contentMapper.insert(content);
+        return TaotaoResult.ok();
+    }
+
+    @Override
+    public TaotaoResult editContent(Content content) {
+        content.setUpdated(new Date());
+        contentMapper.updateByPrimaryKey(content);
+        return TaotaoResult.ok();
+    }
+
+    @Override
+    public TaotaoResult deleteContents(List<Long> ids) {
+        contentMapper.deleteBatchById(ids);
         return TaotaoResult.ok();
     }
 

@@ -44,9 +44,24 @@
     from tb_content
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="selectByCategoryId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+      select
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+      from tb_content
+      where category_id = #{categoryId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_content
     where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteBatchById">
+    delete from tb_content
+    where id in
+    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+      ${item}
+    </foreach>
   </delete>
   <insert id="insert" parameterType="com.taotao.pojo.Content" >
     insert into tb_content (id, category_id, title, 
