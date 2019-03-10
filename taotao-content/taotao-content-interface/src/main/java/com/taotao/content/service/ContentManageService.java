@@ -23,4 +23,6 @@ public interface ContentManageService {
     TaotaoResult editContent(Content content);
 
     TaotaoResult deleteContents(List<Long> ids);
+
+    List<Content> showContentListByCatId(Long categoryId);
 }

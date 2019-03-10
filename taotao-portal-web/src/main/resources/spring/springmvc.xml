@@ -13,7 +13,7 @@
     <mvc:annotation-driven/>
 
     <!-- 加载配置文件 -->
-    <!--<context:property-placeholder location="classpath:properties/*.properties" />-->
+    <context:property-placeholder location="classpath:properties/*.properties" />
 
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -24,6 +24,6 @@
     <!-- 引用dubbo服务 -->
     <dubbo:application name="taotao-portal-web"/>
     <dubbo:registry protocol="zookeeper" address="10.211.55.3:2181"/>
-    <!--<dubbo:reference interface="com.taotao.service.TestService" id="testService" timeout="300000"/>-->
+    <dubbo:reference interface="com.taotao.content.service.ContentManageService" id="contentManageService" timeout="300000"/>
 
 </beans>

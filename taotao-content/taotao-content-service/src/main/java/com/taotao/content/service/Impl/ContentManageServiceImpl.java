@@ -3,11 +3,16 @@ package com.taotao.content.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taotao.content.service.ContentManageService;
+import com.taotao.content.service.JedisClient;
 import com.taotao.mapper.ContentCategoryMapper;
 
 import com.taotao.mapper.ContentMapper;
 import com.taotao.pojo.*;
+import com.taotao.utils.JsonUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -21,6 +26,10 @@ public class ContentManageServiceImpl implements ContentManageService {
     ContentCategoryMapper contentCategoryMapper;
     @Autowired
     ContentMapper contentMapper;
+    @Autowired
+    JedisClient jedisClient;
+    @Value("${CONTENT_KEY}")
+    String contentKey;
 
     @Override
     public List<EasyUIDataTreeNode> showContentCatList(Long parentId) {
@@ -102,6 +111,11 @@ public class ContentManageServiceImpl implements ContentManageService {
 
     @Override
     public TaotaoResult saveContent(Content content) {
+        try {
+            jedisClient.hdel(contentKey,String.valueOf(content.getCategoryId()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         content.setCreated(new Date());
         content.setUpdated(new Date());
         contentMapper.insert(content);
@@ -110,6 +124,11 @@ public class ContentManageServiceImpl implements ContentManageService {
 
     @Override
     public TaotaoResult editContent(Content content) {
+        try {
+            jedisClient.hdel(contentKey,String.valueOf(content.getCategoryId()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         content.setUpdated(new Date());
         contentMapper.updateByPrimaryKey(content);
         return TaotaoResult.ok();
@@ -117,8 +136,37 @@ public class ContentManageServiceImpl implements ContentManageService {
 
     @Override
     public TaotaoResult deleteContents(List<Long> ids) {
+        try {
+            Long categoryId = contentMapper.selectByPrimaryKey(ids.get(0)).getCategoryId();
+            jedisClient.hdel(contentKey,String.valueOf(categoryId));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         contentMapper.deleteBatchById(ids);
         return TaotaoResult.ok();
+    }
+
+    @Override
+    public List<Content> showContentListByCatId(Long categoryId) {
+        //判断缓存中是否存在
+        try {
+            String hget = jedisClient.hget(contentKey, String.valueOf(categoryId));
+            if (StringUtils.isNotBlank(hget))
+                return JsonUtil.stringToObject(hget, new TypeReference<List<Content>>() {
+                });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        List<Content> contentList = contentMapper.selectByCategoryId(categoryId);
+
+        //把数据放在缓存中
+        try {
+            jedisClient.hset(contentKey,String.valueOf(categoryId),JsonUtil.objToString(contentList));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return contentList;
     }
 
     private void findChildrenIds(Long parentId,List<Long> childrenIds){
