@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taotao.search.mapper.SearchMapper">
+    <resultMap id="BaseResultMap" type="com.taotao.search.pojo.SearchItem">
+        <constructor>
+            <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="sell_point" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="price" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="image" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="category_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="item_desc" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, sell_point, price, image, category_name, item_desc
+  </sql>
+    <select id="selectAllSearchItems" resultMap="BaseResultMap">
+        SELECT ti.id, ti.title, ti.sell_point, ti.price, ti.image,
+        tc.`name` as category_name, td.item_desc
+        from tb_item ti
+        LEFT JOIN tb_item_desc td on ti.id = td.item_id
+        LEFT JOIN tb_item_cat tc on ti.cid = tc.id
+  </select>
+</mapper>

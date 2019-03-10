@@ -9,7 +9,7 @@
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-    <context:component-scan base-package="com.taotao.manager.controller"/>
+    <context:component-scan base-package="com.taotao.search.controller"/>
     <mvc:annotation-driven/>
 
     <!-- 加载配置文件 -->
@@ -21,29 +21,9 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!-- 定义文件上传解析器 -->
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- 设定默认编码 -->
-        <property name="defaultEncoding" value="UTF-8"/>
-        <!-- 设定文件上传的最大值5MB，5*1024*1024 -->
-        <property name="maxUploadSize" value="5242880"/>
-    </bean>
-
-
-    <!-- 资源映射 -->
-    <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
-    <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
-
     <!-- 引用dubbo服务 -->
-    <dubbo:application name="taotao-manager-web"/>
+    <dubbo:application name="taotao-search-web"/>
     <dubbo:registry protocol="zookeeper" address="10.211.55.3:2181"/>
-    <dubbo:reference interface="com.taotao.service.TestService" id="testService" timeout="300000"/>
-    <dubbo:reference interface="com.taotao.service.ItemService" id="itemService" timeout="300000"/>
-    <dubbo:reference interface="com.taotao.service.ItemCatService" id="itemCatService" timeout="300000"/>
-    <dubbo:reference interface="com.taotao.service.ItemParamService" id="itemParamService" timeout="300000"/>
-    <dubbo:reference interface="com.taotao.service.UploadFileService" id="uploadFileService" timeout="300000"/>
-    <dubbo:reference interface="com.taotao.content.service.ContentManageService" id="contentManageService" timeout="300000"/>
     <dubbo:reference interface="com.taotao.search.service.SearchService" id="searchService" timeout="300000"/>
 
 </beans>
