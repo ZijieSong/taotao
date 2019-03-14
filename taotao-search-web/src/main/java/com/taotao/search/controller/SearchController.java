@@ -20,7 +20,7 @@ public class SearchController {
                               @RequestParam(value = "page",defaultValue = "1") Integer page, Model model) throws Exception {
         //解决get中文乱码问题
         queryStr = new String(queryStr.getBytes("iso8859-1"),"utf-8");
-
+//        int i = 1/0;
         SearchResult searchResult = searchService.getSearchResult(queryStr, page, 20);
         model.addAttribute("query",queryStr);
         model.addAttribute("totalPages",searchResult.getTotalPages());
