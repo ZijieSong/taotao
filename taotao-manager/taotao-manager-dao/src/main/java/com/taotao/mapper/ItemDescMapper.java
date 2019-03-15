@@ -6,4 +6,6 @@ public interface ItemDescMapper {
     int insert(ItemDesc record);
 
     int insertSelective(ItemDesc record);
+
+    ItemDesc selectByItemId(Long itemId);
 }

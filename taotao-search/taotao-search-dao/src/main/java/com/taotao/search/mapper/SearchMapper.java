@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SearchMapper {
     List<SearchItem> selectAllSearchItems();
+
+    SearchItem selectSearchItemById(Long id);
 }

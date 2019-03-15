@@ -22,4 +22,12 @@
         LEFT JOIN tb_item_desc td on ti.id = td.item_id
         LEFT JOIN tb_item_cat tc on ti.cid = tc.id
   </select>
+    <select id="selectSearchItemById" parameterType="long" resultMap="BaseResultMap">
+        SELECT ti.id, ti.title, ti.sell_point, ti.price, ti.image,
+        tc.`name` as category_name, td.item_desc
+        from tb_item ti
+        LEFT JOIN tb_item_desc td on ti.id = td.item_id
+        LEFT JOIN tb_item_cat tc on ti.cid = tc.id
+        where ti.id = #{id}
+    </select>
 </mapper>

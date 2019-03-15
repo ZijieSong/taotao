@@ -16,6 +16,9 @@
       <arg column="item_desc" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  <sql id="Base_Column_List" >
+    item_id, item_desc, created, updated
+  </sql>
   <sql id="Blob_Column_List" >
     item_desc
   </sql>
@@ -56,4 +59,10 @@
       </if>
     </trim>
   </insert>
+  <select id="selectByItemId" parameterType="long" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_item_desc
+    where item_id = #{itemId}
+  </select>
 </mapper>

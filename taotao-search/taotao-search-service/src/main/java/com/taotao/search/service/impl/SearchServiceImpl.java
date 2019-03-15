@@ -30,20 +30,12 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public TaotaoResult addAllSolrDocuments() throws Exception {
         List<SearchItem> searchItemList = searchMapper.selectAllSearchItems();
-        List<SolrInputDocument> documentList = new ArrayList<>();
-        searchItemList.forEach(searchItem -> {
-            SolrInputDocument document = new SolrInputDocument();
-            document.addField("id",searchItem.getId());
-            document.addField("item_title",searchItem.getTitle());
-            document.addField("item_sell_point",searchItem.getSellPoint());
-            document.addField("item_price",searchItem.getPrice());
-            document.addField("item_image",searchItem.getImage());
-            document.addField("item_category_name",searchItem.getCategoryName());
-            document.addField("item_desc",searchItem.getItemDesc());
-            documentList.add(document);
-        });
-        solrServer.add(documentList);
-        solrServer.commit();
+        searchDao.addDocuments(searchItemList);
+        return TaotaoResult.ok();
+    }
+    @Override
+    public TaotaoResult addSolrDocuments(List<SearchItem> searchItems) throws Exception {
+        searchDao.addDocuments(searchItems);
         return TaotaoResult.ok();
     }
 
