@@ -2,16 +2,23 @@ package com.taotao.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taotao.common.jedis.JedisClient;
+import com.taotao.common.jedis.impl.JedisClientCluster;
+import com.taotao.common.pojo.EasyUIDataGridResult;
+import com.taotao.common.pojo.TaotaoResult;
+import com.taotao.common.utils.JsonUtil;
 import com.taotao.mapper.ItemDescMapper;
 import com.taotao.mapper.ItemMapper;
 import com.taotao.mapper.ItemParamItemMapper;
 import com.taotao.pojo.*;
 import com.taotao.service.ItemService;
-import com.taotao.utils.IDUtils;
+import com.taotao.common.utils.IDUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
@@ -37,6 +44,14 @@ public class ItemServiceImpl implements ItemService {
     private JmsTemplate jmsTemplate;
     @Resource(name = "topicDestination")
     private Destination topicDestination;
+    @Autowired
+    private JedisClient jedisClient;
+    @Value("${ITEMDETAIL_KEY_PREFIX}")
+    private String itemDetailKeyPre;
+    @Value("${ITEMDETAIL_KEY_BASE_SUFFIX}")
+    private String itemDetailKeyBaseSuf;
+    @Value("${ITEMDETAIL_KEY_DESC_SUFFIX}")
+    private String itemDetailKeyDescSuf;
 
     @Override
     public EasyUIDataGridResult getItemList(int pageNum, int pageSize) {
@@ -75,11 +90,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public TaotaoResult compAddItem(Item item, String desc, String itemParams){
+    public TaotaoResult compAddItem(Item item, String desc, String itemParams) {
         //调用方法的目的是为了防止add这个事务方法未提交之前消息就发出去被接收到，
         //接收者查询数据库，但事务还没提交，也就没这条记录导致空指针异常
         //同一个类 非事务调用事务会不生效，因为不走代理对象而直接走真实对象，因此要获取代理对象
-        TaotaoResult result = ((ItemService)AopContext.currentProxy()).addItem(item, desc, itemParams);
+        TaotaoResult result = ((ItemService) AopContext.currentProxy()).addItem(item, desc, itemParams);
         //发送消息
         log.info("生产者发送消息");
         jmsTemplate.send(topicDestination, new MessageCreator() {
@@ -93,11 +108,53 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItem(Long itemId) {
-        return itemMapper.selectByPrimaryKey(itemId);
+        //判断缓存是否有数据
+        String itemBaseKey = itemDetailKeyPre + ":" + itemId + ":" + itemDetailKeyBaseSuf;
+        try {
+            String itemBase = jedisClient.get(itemBaseKey);
+            if (StringUtils.isNotBlank(itemBase)) {
+                //刷新有效期
+                jedisClient.expire(itemBaseKey, 24 * 3600);
+                return JsonUtil.stringToObject(itemBase, Item.class);
+            }
+        } catch (Exception e) {
+            log.error("error message", e);
+        }
+
+        //从数据库查询，并添加到缓存
+        Item item = itemMapper.selectByPrimaryKey(itemId);
+
+        try {
+            jedisClient.set(itemBaseKey, JsonUtil.objToString(item));
+            jedisClient.expire(itemBaseKey, 24 * 3600);
+        } catch (Exception e) {
+            log.error("error message", e);
+        }
+
+        return item;
     }
 
     @Override
     public ItemDesc getItemDesc(Long itemId) {
-        return itemDescMapper.selectByItemId(itemId);
+        String itemDescKey = itemDetailKeyPre + ":" + itemId + ":" + itemDetailKeyDescSuf;
+        try {
+            String itemDesc = jedisClient.get(itemDescKey);
+            if (StringUtils.isNotBlank(itemDesc)) {
+                jedisClient.expire(itemDescKey, 24 * 3600);
+                return JsonUtil.stringToObject(itemDesc, ItemDesc.class);
+            }
+        } catch (Exception e) {
+            log.error("error message", e);
+        }
+
+        ItemDesc itemDesc = itemDescMapper.selectByItemId(itemId);
+
+        try {
+            jedisClient.set(itemDescKey, JsonUtil.objToString(itemDesc));
+            jedisClient.expire(itemDescKey, 24 * 3600);
+        } catch (Exception e) {
+            log.error("error message", e);
+        }
+        return itemDesc;
     }
 }

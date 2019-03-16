@@ -1,9 +1,9 @@
 package com.taotao.content.service;
 
 import com.taotao.pojo.Content;
-import com.taotao.pojo.EasyUIDataGridResult;
-import com.taotao.pojo.EasyUIDataTreeNode;
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.EasyUIDataGridResult;
+import com.taotao.common.pojo.EasyUIDataTreeNode;
+import com.taotao.common.pojo.TaotaoResult;
 
 import java.util.List;
 

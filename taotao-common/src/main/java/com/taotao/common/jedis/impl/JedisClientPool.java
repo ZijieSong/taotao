@@ -1,14 +1,16 @@
-package com.taotao.content.service.Impl;
+package com.taotao.common.jedis.impl;
 
-import com.taotao.content.service.JedisClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.taotao.common.jedis.JedisClient;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class JedisClientPool implements JedisClient {
 
-    @Autowired
     private JedisPool jedisPool;
+
+    public void setJedisPool(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
 
     @Override
     public String set(String key, String value) {

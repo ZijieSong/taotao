@@ -1,6 +1,5 @@
 package com.taotao.search.dao;
 
-import com.taotao.pojo.TaotaoResult;
 import com.taotao.search.pojo.SearchItem;
 import com.taotao.search.pojo.SearchResult;
 import org.apache.solr.client.solrj.SolrQuery;

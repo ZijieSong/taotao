@@ -1,7 +1,7 @@
 package com.taotao.service.impl;
 
 import com.taotao.mapper.ItemCatMapper;
-import com.taotao.pojo.EasyUIDataTreeNode;
+import com.taotao.common.pojo.EasyUIDataTreeNode;
 import com.taotao.pojo.ItemCat;
 import com.taotao.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;

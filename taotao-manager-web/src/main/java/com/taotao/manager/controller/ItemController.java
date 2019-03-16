@@ -1,9 +1,9 @@
 package com.taotao.manager.controller;
 
-import com.taotao.pojo.EasyUIDataGridResult;
+import com.taotao.common.pojo.EasyUIDataGridResult;
 import com.taotao.pojo.Item;
-import com.taotao.pojo.KindEditorResult;
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.KindEditorResult;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.service.ItemService;
 import com.taotao.service.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;

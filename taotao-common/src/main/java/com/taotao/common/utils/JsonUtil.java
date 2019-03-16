@@ -1,4 +1,4 @@
-package com.taotao.utils;
+package com.taotao.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.map.DeserializationConfig;

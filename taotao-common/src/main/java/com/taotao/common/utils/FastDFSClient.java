@@ -1,4 +1,4 @@
-package com.taotao.utils;
+package com.taotao.common.utils;
 
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.ClientGlobal;

@@ -1,7 +1,7 @@
 package com.taotao.content.service;
 
+import com.taotao.common.jedis.JedisClient;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

@@ -1,9 +1,8 @@
 package com.taotao.service.impl;
 
-import com.taotao.pojo.KindEditorResult;
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.KindEditorResult;
 import com.taotao.service.UploadFileService;
-import com.taotao.utils.FastDFSClient;
+import com.taotao.common.utils.FastDFSClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.taotao.utils;
+package com.taotao.common.utils;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;

@@ -2,9 +2,9 @@ package com.taotao.manager.controller;
 
 import com.taotao.content.service.ContentManageService;
 import com.taotao.pojo.Content;
-import com.taotao.pojo.EasyUIDataGridResult;
-import com.taotao.pojo.EasyUIDataTreeNode;
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.EasyUIDataGridResult;
+import com.taotao.common.pojo.EasyUIDataTreeNode;
+import com.taotao.common.pojo.TaotaoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

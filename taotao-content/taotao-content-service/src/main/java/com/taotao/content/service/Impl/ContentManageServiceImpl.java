@@ -2,13 +2,16 @@ package com.taotao.content.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taotao.common.jedis.JedisClient;
+import com.taotao.common.pojo.EasyUIDataGridResult;
+import com.taotao.common.pojo.EasyUIDataTreeNode;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.content.service.ContentManageService;
-import com.taotao.content.service.JedisClient;
 import com.taotao.mapper.ContentCategoryMapper;
 
 import com.taotao.mapper.ContentMapper;
 import com.taotao.pojo.*;
-import com.taotao.utils.JsonUtil;
+import com.taotao.common.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;

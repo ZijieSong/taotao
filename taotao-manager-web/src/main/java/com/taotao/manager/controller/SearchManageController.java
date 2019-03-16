@@ -1,6 +1,6 @@
 package com.taotao.manager.controller;
 
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package com.taotao.search.service.impl;
 
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.search.dao.SearchDao;
 import com.taotao.search.mapper.SearchMapper;
 import com.taotao.search.pojo.SearchItem;
@@ -8,14 +8,9 @@ import com.taotao.search.pojo.SearchResult;
 import com.taotao.search.service.SearchService;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service

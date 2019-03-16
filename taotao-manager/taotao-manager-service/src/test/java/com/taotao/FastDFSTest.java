@@ -1,6 +1,6 @@
 package com.taotao;
 
-import com.taotao.utils.FastDFSClient;
+import com.taotao.common.utils.FastDFSClient;
 import org.junit.Test;
 
 public class FastDFSTest {

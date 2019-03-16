@@ -1,6 +1,6 @@
 package com.taotao.manager.controller;
 
-import com.taotao.pojo.EasyUIDataTreeNode;
+import com.taotao.common.pojo.EasyUIDataTreeNode;
 import com.taotao.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

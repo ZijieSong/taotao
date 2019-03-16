@@ -1,9 +1,9 @@
 package com.taotao.service;
 
-import com.taotao.pojo.EasyUIDataGridResult;
+import com.taotao.common.pojo.EasyUIDataGridResult;
 import com.taotao.pojo.Item;
 import com.taotao.pojo.ItemDesc;
-import com.taotao.pojo.TaotaoResult;
+import com.taotao.common.pojo.TaotaoResult;
 
 public interface ItemService {
     EasyUIDataGridResult getItemList(int pageNum, int pageSize);

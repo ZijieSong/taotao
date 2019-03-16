@@ -3,7 +3,7 @@ package com.taotao.portal.controller;
 import com.taotao.content.service.ContentManageService;
 import com.taotao.pojo.Content;
 import com.taotao.portal.VO.Ad1Node;
-import com.taotao.utils.JsonUtil;
+import com.taotao.common.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

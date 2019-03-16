@@ -1,4 +1,4 @@
-package com.taotao.content.service;
+package com.taotao.common.jedis;
 
 public interface JedisClient {
 
