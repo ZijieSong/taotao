@@ -1,6 +1,8 @@
 package com.taotao.item.viewObject;
 
+import com.taotao.pojo.Item;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 
 public class ItemVO {
     private Long id;
@@ -57,5 +59,12 @@ public class ItemVO {
         if(StringUtils.isNotBlank(getImage()))
             return getImage().split(",");
         return null;
+    }
+
+    public ItemVO() {
+    }
+
+    public ItemVO(Item item){
+        BeanUtils.copyProperties(item,this);
     }
 }

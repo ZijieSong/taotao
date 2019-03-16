@@ -20,17 +20,8 @@ public class ItemController {
     public String getItemDetails(@PathVariable Long itemId, Model model){
         Item item = itemService.getItem(itemId);
         ItemDesc itemDesc = itemService.getItemDesc(itemId);
-        model.addAttribute("item",generateVOFromItem(item));
+        model.addAttribute("item",new ItemVO(item));
         model.addAttribute("itemDesc",itemDesc);
         return "item";
-    }
-
-
-
-
-    private ItemVO generateVOFromItem(Item item){
-        ItemVO itemVO = new ItemVO();
-        BeanUtils.copyProperties(item,itemVO);
-        return itemVO;
     }
 }
