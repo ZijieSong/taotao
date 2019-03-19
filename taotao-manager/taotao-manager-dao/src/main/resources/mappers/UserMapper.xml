@@ -21,6 +21,30 @@
     from tb_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+    <select id="selectByUsername" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List"/>
+      from tb_user
+      where username=#{username}
+    </select>
+  <select id="selectByPhone" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_user
+    where phone = #{phone}
+  </select>
+  <select id="selectByEmail" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_user
+    where email=#{email}
+  </select>
+  <select id="selectByUserNameAndPassword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_user
+    where username=#{username} and password=#{password}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_user
     where id = #{id,jdbcType=BIGINT}

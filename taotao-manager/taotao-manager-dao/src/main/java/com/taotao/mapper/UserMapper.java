@@ -1,6 +1,7 @@
 package com.taotao.mapper;
 
 import com.taotao.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +15,12 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectByUsername(String username);
+
+    User selectByPhone(String phone);
+
+    User selectByEmail(String email);
+
+    User selectByUserNameAndPassword(@Param("username")String username, @Param("password")String password);
 }
