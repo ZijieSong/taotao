@@ -69,4 +69,15 @@
       </if>
     </trim>
   </insert>
+  <insert id="insertBatch" parameterType="list">
+    insert into tb_order_item (item_id, order_id, num,
+    title, price, total_fee,pic_path)
+    values
+    <foreach collection="orderItemList" item="item" index="index" separator=",">
+      (#{item.itemId,jdbcType=VARCHAR}, #{item.orderId,jdbcType=VARCHAR},
+      #{item.num,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR},
+      #{item.price,jdbcType=BIGINT},
+      #{item.totalFee,jdbcType=BIGINT}, #{item.picPath,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
 </mapper>

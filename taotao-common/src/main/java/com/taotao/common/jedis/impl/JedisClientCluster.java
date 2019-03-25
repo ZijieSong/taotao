@@ -69,4 +69,9 @@ public class JedisClientCluster implements JedisClient {
         return jedisCluster.del(key);
     }
 
+    @Override
+    public Long setnx(String key, String value) {
+        return jedisCluster.setnx(key, value);
+    }
+
 }

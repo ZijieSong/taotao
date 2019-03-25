@@ -69,7 +69,7 @@ public class CartController {
         return "cartSuccess";
     }
 
-    @RequestMapping("/cart/cart")
+    @RequestMapping( "/cart/cart")
     public String showCartList(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getAttribute("USER");
         //从cookie中取出cartItemList

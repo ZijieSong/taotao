@@ -73,4 +73,10 @@ public class CartServiceImpl implements CartService {
         jedisClient.hdel(cartPre+":"+userId, String.valueOf(itemId));
         return TaotaoResult.ok();
     }
+
+    @Override
+    public TaotaoResult delAllCartItemsByUserId(Long userId) {
+        jedisClient.del(cartPre + ":" + userId);
+        return TaotaoResult.ok();
+    }
 }

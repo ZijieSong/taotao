@@ -1,6 +1,8 @@
 package com.taotao.pojo;
 
-public class OrderItem {
+import java.io.Serializable;
+
+public class OrderItem implements Serializable {
     private String itemId;
 
     private String orderId;

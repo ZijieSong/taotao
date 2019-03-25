@@ -15,4 +15,6 @@ public interface CartService {
     TaotaoResult updateCartItemNum(Long userId, Long itemId, Integer num);
 
     TaotaoResult delCartItemById(Long userId, Long itemId);
+
+    TaotaoResult delAllCartItemsByUserId(Long userId);
 }

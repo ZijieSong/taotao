@@ -25,4 +25,6 @@ public interface JedisClient {
     List<String> hvals(String key);
 
     Long del(String key);
+
+    Long setnx(String key, String value);
 }

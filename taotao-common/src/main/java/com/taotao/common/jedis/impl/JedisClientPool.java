@@ -102,5 +102,14 @@ public class JedisClientPool implements JedisClient {
         return result;
     }
 
+    @Override
+    public Long setnx(String key, String value) {
+        Jedis jedis = jedisPool.getResource();
+        Long result = jedis.setnx(key,value);
+        jedis.close();
+        return result;
+    }
+
+
 }
 
